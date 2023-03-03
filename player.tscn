@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnkymdvf1jvvu"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_3cqgd"]
+[ext_resource type="Texture2D" uid="uid://dy2j5i53516ls" path="res://icon.svg" id="1_i7geq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_30b8p"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljykm"]
+size = Vector2(16, 16)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_3cqgd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i7geq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_30b8p")
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
+default_color = Color(0, 0, 1, 1)
+
+[node name="Hook" type="Area2D" parent="."]
+visible = false
+top_level = true
+
+[node name="ColorRect" type="ColorRect" parent="Hook"]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+mouse_filter = 2
+color = Color(0, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hook"]
+shape = SubResource("RectangleShape2D_ljykm")
+disabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[connection signal="body_entered" from="Hook" to="." method="_on_hook_body_entered"]
